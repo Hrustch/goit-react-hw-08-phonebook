@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeContact } from 'redux/contactSlice';
+import { deleteContact, fetchContacts } from 'redux/contactsOperations';
 
 
 export const PhonebookContacts = () => {
   const dispatch = useDispatch()
-  const {contacts, filter} = useSelector(state =>(state))
+  const {contacts, filter} = useSelector(state =>(state.contacts))
 
+
+  useEffect(()=>{
+    dispatch(fetchContacts())
+  },[dispatch])
 
 
   const getFilteredContacts = () => {
@@ -16,7 +20,7 @@ export const PhonebookContacts = () => {
   };
 
   const deleteContactById = (id) => {
-    dispatch(removeContact(id))
+    dispatch(deleteContact(id))
   };
 
   return (

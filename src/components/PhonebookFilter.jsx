@@ -6,7 +6,7 @@ import { setFilter } from 'redux/contactSlice';
 
 export const PhonebookFilter = () => {
   const dispatch = useDispatch()
-  const {filter} = useSelector(state =>(state))
+  const {filter} = useSelector(state =>(state.contacts))
 
 
 

@@ -2,17 +2,22 @@ import { configureStore } from '@reduxjs/toolkit';
 import { phoneBookReducer } from './contactSlice';
 import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
+import { authReducer } from './auth/authSlice';
 
-const persistConfig = {
-  key: 'contactsLocalStorage',
+
+const authPersistConfig = {
+  key: 'auth',
   storage,
-  whitelist: ['contacts'],
-};
+  whitelist: ['token']
+}
 
-const persistedReducer = persistReducer(persistConfig, phoneBookReducer);
+
+const authPersistReducer = persistReducer(authPersistConfig, authReducer)
+
+
 
 export const store = configureStore({
-  reducer: persistedReducer,
+  reducer: {contacts: phoneBookReducer, auth: authPersistReducer},
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
@@ -20,4 +25,14 @@ export const store = configureStore({
       },
     }),
 });
+
+/* export const store = configureStore({
+  reducer: {
+    contacts: contactsReducer,
+    filters: filterReducer,
+    auth: authPersistReducer,
+  },
+  middleware: getDefaultMiddleware => getDefaultMiddleware(),
+}); */
+
 export const persistor = persistStore(store);

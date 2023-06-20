@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
-import { addContact } from 'redux/contactSlice';
+import { addContact } from 'redux/contactsOperations';
 
 
 export const PhonebookForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const dispatch = useDispatch()
-  const {contacts} = useSelector(state =>(state))
+  const {contacts} = useSelector(state =>(state.contacts))
 
   const addNewContact = (sentContact) => {
+    console.log(contacts)
     const isExist = contacts.find(
       (contact) => contact.name === sentContact.name || contact.number === sentContact.number
     );
@@ -30,7 +31,7 @@ export const PhonebookForm = () => {
   
   const onSubmit = (e) => {
     e.preventDefault();
-    addNewContact(this.state);
+    addNewContact({name, number});
     setName('')
     setNumber('');
   }
