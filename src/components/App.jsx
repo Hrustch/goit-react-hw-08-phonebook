@@ -14,8 +14,6 @@ import { getUser, logout } from 'redux/auth/authOperations';
 import { token } from 'redux/http';
 
 const App = () => {
-  const { contacts } = useSelector(state => state.contacts);
-
   const dispatch = useDispatch()
   const isAuth = useSelector(selectIsAuth);  
   
